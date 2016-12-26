@@ -4,21 +4,7 @@ import { UserService } from '../services/user.service';
 
 
 @Component({
-    template: `
-        <div *ngIf="user.isLogin" class="container">
-            <form (ngSubmit)="ok()">
-                <div class="alert alert-danger" *ngIf="errorMsg!==null">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{errorMsg}}
-                </div>
-                <div class="form-group">
-                    <label>Pass</label>
-                    <input type="text" class="form-control" [(ngModel)]="pass" name="pass">
-                </div>
-                <button type="submit" class="btn btn-default">OK</button>
-            </form>
-        </div>
-    `,
+    templateUrl: './index.component.html',
 })
 export class IndexComponent {
     pass: string = "";

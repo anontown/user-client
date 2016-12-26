@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AnontownModule } from 'anontown';
+import { AnontownModule, AtApiService } from 'anontown';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { InComponent } from './components/in.component';
@@ -14,8 +14,9 @@ import { ClientComponent } from './components/client.component';
 import { TokensComponent } from './pages/tokens.component';
 import { ClientsComponent } from './pages/clients.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Config } from './config';
 
-
+AtApiService.serverURL = Config.serverURL;
 
 @NgModule({
     declarations: [

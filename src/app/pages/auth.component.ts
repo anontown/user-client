@@ -5,12 +5,7 @@ import { UserService } from '../services/user.service';
 
 
 @Component({
-    template: `
-        <div *ngIf="user.isLogin" class="container">
-            認証しますか？
-            <button type="button" class="btn btn-default" (click)="ok()">OK</button>
-        </div>
-    `,
+    templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit {
     client: string;

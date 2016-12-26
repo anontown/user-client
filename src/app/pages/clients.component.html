@@ -1,0 +1,4 @@
+<div *ngIf="user.isLogin" class="container">
+  <at-client *ngFor="let c of user.clients" [client]="c" (update)="update($event)"></at-client>
+  <at-client-add></at-client-add>
+</div>
