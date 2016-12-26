@@ -40,15 +40,19 @@ export class TokensComponent {
 
   }
 
-  key(token: Token) {
-    this.api.updateToken(this.user.auth, { id: token.id });
+  async key(token: Token) {
+    this.update(await this.api.updateToken(this.user.auth, { id: token.id }));
   }
 
-  active(token: Token) {
+  async active(token: Token) {
     if (token.active) {
-      this.api.disableToken(this.user.auth, { id: token.id });
+      this.update(await this.api.disableToken(this.user.auth, { id: token.id }));
     } else {
-      this.api.enableToken(this.user.auth, { id: token.id });
+      this.update(await this.api.enableToken(this.user.auth, { id: token.id }));
     }
+  }
+
+  update(token: Token) {
+    this.user.tokens[this.user.tokens.findIndex((t) => t.id === token.id)] = token;
   }
 }

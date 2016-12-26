@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AtApiService, Client } from 'anontown';
 import { UserService } from '../services/user.service';
 
@@ -35,6 +35,9 @@ export class ClientComponent extends OnInit {
     @Input()
     client: Client;
 
+    @Output()
+    update = new EventEmitter<Client>();
+
     constructor(private api: AtApiService, private user: UserService) {
         super();
     }
@@ -42,7 +45,7 @@ export class ClientComponent extends OnInit {
     name: string;
     url: string;
     ngOnInit() {
-        this.name = this.client.id;
+        this.name = this.client.name;
         this.url = this.client.url;
     }
 
@@ -51,10 +54,10 @@ export class ClientComponent extends OnInit {
         this.isEdit = !this.isEdit;
     }
     async editOk() {
-        await this.api.updateClient(this.user.auth, {
+        this.update.emit(await this.api.updateClient(this.user.auth, {
             id: this.client.id,
             name: this.name,
             url: this.url
-        })
+        }));
     }
 }
