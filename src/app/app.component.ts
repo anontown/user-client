@@ -1,18 +1,16 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: [
+    './app.component.scss'
+  ]
 })
 export class AppComponent implements OnInit {
-  @ViewChild('nav') nav: ElementRef;
-  resize() {
-    document.body.style.paddingTop = this.nav.nativeElement.clientHeight + 20 + "px";
-  }
 
   ngOnInit() {
-    this.resize();
   }
 
   private user: UserService;

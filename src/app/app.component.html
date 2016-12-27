@@ -1,28 +1,30 @@
-<nav class="navbar navbar-default navbar-fixed-top" (window:resize)="resize()" #nav>
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-        aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+<md-sidenav-layout>
+  <md-sidenav #sidenav mode="side">
+    <md-nav-list>
+      <md-list-item>
+        <button md-button [routerLink]="['/token']">
+          <span>連携アプリ管理</span>
+        </button>
+      </md-list-item>
+      <md-list-item>
+        <button md-button [routerLink]="['/client']">
+          <span>クライアント管理(開発者向け)</span>
+        </button>
+      </md-list-item>
+    </md-nav-list>
+  </md-sidenav>
 
-      <a [routerLink]="['/']" class="navbar-brand">Anontown</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-          <a [routerLink]="['/token']">連携アプリ管理</a>
-        </li>
-        <li>
-          <a [routerLink]="['/client']">クライアント管理(開発者向け)</a>
-        </li>
-      </ul>
-    </div>
+  <md-toolbar>
+    <button (click)="sidenav.toggle()" class="toggle-button">
+      <i class="material-icons app-toolbar-menu">menu</i>
+    </button>
+    <button md-button [routerLink]="['/']">
+      <span>Anontown</span>
+    </button>
+  </md-toolbar>
+
+  <div class="content">
+    <at-in *ngIf="user.notLogin"></at-in>
+    <router-outlet></router-outlet>
   </div>
-</nav>
-
-<at-in *ngIf="user.notLogin"></at-in>
-<router-outlet></router-outlet>
+</md-sidenav-layout>

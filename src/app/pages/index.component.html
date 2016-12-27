@@ -1,12 +1,13 @@
-<div *ngIf="user.isLogin" class="container">
+<md-card *ngIf="user.isLogin">
   <form (ngSubmit)="ok()">
-    <div class="alert alert-danger" *ngIf="errorMsg!==null">
-      <span class="glyphicon glyphicon-exclamation-sign"></span> {{errorMsg}}
+    <div *ngIf="errorMsg!==null">
+      <md-icon>error</md-icon> {{errorMsg}}
     </div>
-    <div class="form-group">
-      <label>Pass</label>
-      <input type="text" class="form-control" [(ngModel)]="pass" name="pass">
-    </div>
-    <button type="submit" class="btn btn-default">OK</button>
+
+    <md-input-container>
+      <input md-input type="text" placeholder="Pass" [(ngModel)]="pass" name="pass">
+    </md-input-container>
+
+    <button type="submit" class="btn btn-default" md-button>OK</button>
   </form>
-</div>
+</md-card>

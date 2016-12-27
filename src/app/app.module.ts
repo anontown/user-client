@@ -13,8 +13,10 @@ import { ClientAddComponent } from './components/client-add.component';
 import { ClientComponent } from './components/client.component';
 import { TokensComponent } from './pages/tokens.component';
 import { ClientsComponent } from './pages/clients.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Config } from './config';
+import { MaterialModule } from '@angular/material';
+import 'hammerjs';
+import { ClientEditComponent } from './components/client-edit.component';
 
 AtApiService.serverURL = Config.serverURL;
 
@@ -27,14 +29,14 @@ AtApiService.serverURL = Config.serverURL;
         ClientAddComponent,
         ClientComponent,
         TokensComponent,
-        ClientsComponent
+        ClientsComponent,
+        ClientEditComponent
     ],
     imports: [
         AnontownModule,
         BrowserModule,
         FormsModule,
         HttpModule,
-        NgbModule.forRoot(),
         RouterModule.forRoot([
             {
                 path: '',
@@ -52,7 +54,8 @@ AtApiService.serverURL = Config.serverURL;
                 path: 'auth',
                 component: AuthComponent
             }
-        ])
+        ]),
+        MaterialModule.forRoot(),
     ],
     providers: [
         UserService
