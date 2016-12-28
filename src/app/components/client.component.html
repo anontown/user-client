@@ -1,15 +1,12 @@
-<md-card>
-  <md-card-header>
-    <md-card-title>{{client.name}}({{client.id}})</md-card-title>
-  </md-card-header>
-  <md-card-content>
-    {{client.url}}
-  </md-card-content>
-  <md-card-actions>
-    <button type="button" (click)="edit()" md-button>
-        <md-icon>edit</md-icon>
-      </button>
-    <at-client-edit [client]="client" *ngIf="isEdit" (update)="ok($event)">
+<div>
+  <h2>{{client.name}}</h2>
+  <span class="client-id">{{client.id}}</span>
+  <span class="client-url">{{client.url}}</span>
+  <div>
+    <button type="button" (click)="edit()" md-button *ngIf="auth&&auth.id===client.user">
+      <md-icon>edit</md-icon>
+    </button>
+    <at-client-edit [client]="client" *ngIf="isEdit" (update)="ok($event)" [auth]="auth">
     </at-client-edit>
-  </md-card-actions>
-</md-card>
+  </div>
+</div>

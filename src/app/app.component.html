@@ -2,14 +2,14 @@
   <md-sidenav #sidenav mode="side">
     <md-nav-list>
       <md-list-item>
-        <button md-button [routerLink]="['/token']">
+        <a [routerLink]="['/token']">
           <span>連携アプリ管理</span>
-        </button>
+        </a>
       </md-list-item>
       <md-list-item>
-        <button md-button [routerLink]="['/client']">
+        <a [routerLink]="['/client']">
           <span>クライアント管理(開発者向け)</span>
-        </button>
+        </a>
       </md-list-item>
     </md-nav-list>
   </md-sidenav>
@@ -18,13 +18,13 @@
     <button (click)="sidenav.toggle()" class="toggle-button">
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>
-    <button md-button [routerLink]="['/']">
+    <button type="button" md-button [routerLink]="['/']">
       <span>Anontown</span>
     </button>
   </md-toolbar>
 
   <div class="content">
-    <at-in *ngIf="user.notLogin"></at-in>
+    <at-in *ngIf="!auth" (login)="login($event)"></at-in>
     <router-outlet></router-outlet>
   </div>
 </md-sidenav-layout>

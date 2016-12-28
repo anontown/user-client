@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserService, IAuthListener } from './services/user.service';
+import { IAuthUser } from 'anontown';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,14 +8,26 @@ import { UserService } from './services/user.service';
     './app.component.scss'
   ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+
+  auth: IAuthUser = null;
+  private authListener: IAuthListener;
 
   ngOnInit() {
+    this.authListener = this.user.addAuthListener(auth => {
+      this.auth = auth;
+    });
   }
 
-  private user: UserService;
-  constructor(user: UserService) {
-    this.user = user;
+  ngOnDestroy() {
+    this.user.removeAuthListener(this.authListener);
+  }
+
+  constructor(private user: UserService) {
+  }
+
+  login(auth: IAuthUser) {
+    this.user.setAuth(auth);
   }
 }
 

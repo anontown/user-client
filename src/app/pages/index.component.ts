@@ -1,29 +1,40 @@
-import { Component } from '@angular/core';
-import { AtApiService, AtError } from 'anontown';
-import { UserService } from '../services/user.service';
+import {
+    Component,
+    OnInit,
+    OnDestroy
+} from '@angular/core';
+import { AtApiService, AtError, IAuthUser } from 'anontown';
+import { UserService, IAuthListener } from '../services/user.service';
 
 
 @Component({
     templateUrl: './index.component.html',
 })
-export class IndexComponent {
+export class IndexComponent implements OnInit, OnDestroy {
+    private auth: IAuthUser = null;
     pass: string = "";
     private errorMsg: string | null = null;
 
     constructor(private user: UserService, private api: AtApiService) {
-        if (user.isLogin) {
-            this.pass = user.auth.pass;
-        } else {
-            user.loginEvent.push(() => {
-                this.pass = user.auth.pass;
-            });
-        }
+    }
+
+    private authListener: IAuthListener;
+    ngOnInit() {
+        this.authListener = this.user.addAuthListener(async auth => {
+            this.auth = auth;
+            if (auth !== null) {
+                this.pass = auth.pass;
+            }
+        });
+    }
+    ngOnDestroy() {
+        this.user.removeAuthListener(this.authListener);
     }
 
     ok() {
         (async () => {
-            await this.api.updateUser(this.user.auth, { pass: this.pass });
-            this.user.auth.pass = this.pass;
+            await this.api.updateUser(this.auth, { pass: this.pass });
+            await this.user.setAuth({ id: this.auth.id, pass: this.pass });
             this.errorMsg = null;
         })().catch(e => {
             if (e instanceof AtError) {

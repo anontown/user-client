@@ -1,18 +1,16 @@
-<div *ngIf="user.isLogin">
-  <md-card *ngFor="let t of user.tokens">
-    <md-card-header>
-      <md-card-title>(クライアント名){{t.client}}</md-card-title>
-    </md-card-header>
-    <md-card-content>
-      ID {{t.id}} Key {{t.key}}
-    </md-card-content>
-    <md-card-actions>
-      <button type="button" md-button (click)="active(t)">
-        {{t.active?'有効':'無効'}}
-      </button>
-      <button type="button" md-button (click)="key(t)">
-        <md-icon>update</md-icon>
-      </button>
-    </md-card-actions>
-  </md-card>
-</div>
+<md-card *ngIf="auth">
+  <md-list>
+    <md-list-item *ngFor="let t of tokens">
+      <h3 md-line>{{clients.get(t.client).name}}</h3>
+      <span class="client-url" md-line>{{clients.get(t.client).url}}</span>
+      <div md-line>
+        <button type="button" md-button (click)="active(t)">
+          {{t.active?'有効':'無効'}}
+        </button>
+        <button type="button" md-button (click)="key(t)">
+          <md-icon>update</md-icon>
+        </button>
+      </div>
+    </md-list-item>
+  </md-list>
+</md-card>

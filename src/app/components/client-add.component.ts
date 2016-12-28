@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { AtApiService, AtError } from 'anontown';
-import { UserService } from '../services/user.service';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { AtApiService, AtError, Client, IAuthUser } from 'anontown';
 
 
 @Component({
@@ -12,18 +11,23 @@ export class ClientAddComponent {
   private name = "";
   private errorMsg: string | null = null;
 
-  constructor(private api: AtApiService,
-    private user: UserService) {
+  @Input()
+  auth: IAuthUser;
+
+  @Output()
+  add = new EventEmitter<Client>();
+
+  constructor(private api: AtApiService) {
 
   }
 
   ok() {
     (async () => {
-      let client = await this.api.createClient(this.user.auth, {
+      let client = await this.api.createClient(this.auth, {
         name: this.name,
         url: this.url
       });
-      this.user.clients.push(client);
+      this.add.emit(client);
       this.errorMsg = null;
     })().catch(e => {
       if (e instanceof AtError) {

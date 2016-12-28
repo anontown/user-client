@@ -1,4 +1,4 @@
-<div *ngIf="user.isLogin" class="container">
+<div *ngIf="auth">
   認証しますか？
-  <button type="button" class="btn btn-default" (click)="ok()">OK</button>
+  <button type="button" (click)="ok()" md-button>OK</button>
 </div>

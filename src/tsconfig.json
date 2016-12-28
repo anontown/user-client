@@ -21,7 +21,7 @@
       "hammerjs"
     ],
     "skipLibCheck": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,

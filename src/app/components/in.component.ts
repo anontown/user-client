@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { AtApiService, AtError } from 'anontown';
-import { UserService } from '../services/user.service';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { AtApiService, AtError, IAuthUser } from 'anontown';
 
 @Component({
     selector: 'at-in',
@@ -12,7 +11,10 @@ export class InComponent {
     private isLogin = true;
     private errorMsg: string | null = null;
 
-    constructor(private api: AtApiService, private user: UserService) { }
+    @Output()
+    login = new EventEmitter<IAuthUser>();
+
+    constructor(private api: AtApiService) { }
 
     ok() {
         (async () => {
@@ -23,7 +25,9 @@ export class InComponent {
             } else {
                 id = await this.api.findUserID({ sn: this.sn });
             }
-            await this.user.login({ id, pass: this.pass });
+            let auth = { id, pass: this.pass };
+            await this.api.authUser(auth);
+            this.login.emit(auth)
         })().catch(e => {
             if (e instanceof AtError) {
                 this.errorMsg = e.message;

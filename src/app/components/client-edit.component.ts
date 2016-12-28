@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { AtApiService, Client, AtError } from 'anontown';
-import { UserService } from '../services/user.service';
+import { AtApiService, Client, AtError, IAuthUser } from 'anontown';
 
 @Component({
     selector: 'at-client-edit',
@@ -13,7 +12,10 @@ export class ClientEditComponent extends OnInit {
     @Output()
     update = new EventEmitter<Client>();
 
-    constructor(private api: AtApiService, private user: UserService) {
+    @Input()
+    auth: IAuthUser;
+
+    constructor(private api: AtApiService) {
         super();
     }
 
@@ -26,7 +28,7 @@ export class ClientEditComponent extends OnInit {
     }
     ok() {
         (async () => {
-            let client = await this.api.updateClient(this.user.auth, {
+            let client = await this.api.updateClient(this.auth, {
                 id: this.client.id,
                 name: this.name,
                 url: this.url

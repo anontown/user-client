@@ -1,4 +1,4 @@
-<md-card *ngIf="user.isLogin">
+<md-card *ngIf="auth">
   <form (ngSubmit)="ok()">
     <div *ngIf="errorMsg!==null">
       <md-icon>error</md-icon> {{errorMsg}}
@@ -8,6 +8,6 @@
       <input md-input type="text" placeholder="Pass" [(ngModel)]="pass" name="pass">
     </md-input-container>
 
-    <button type="submit" class="btn btn-default" md-button>OK</button>
+    <button type="submit" md-button>OK</button>
   </form>
 </md-card>
