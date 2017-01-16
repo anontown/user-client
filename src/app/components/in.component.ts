@@ -12,7 +12,7 @@ export class InComponent {
     private errorMsg: string | null = null;
 
     @Output()
-    login = new EventEmitter<IAuthUser>();
+    login = new EventEmitter<{ auth: IAuthUser, sn: string }>();
 
     constructor(private api: AtApiService) { }
 
@@ -27,7 +27,7 @@ export class InComponent {
             }
             let auth = { id, pass: this.pass };
             await this.api.authUser(auth);
-            this.login.emit(auth)
+            this.login.emit({ auth, sn: this.sn })
         })().catch(e => {
             if (e instanceof AtError) {
                 this.errorMsg = e.message;

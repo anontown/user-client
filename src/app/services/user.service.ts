@@ -6,6 +6,7 @@ import {
 @Injectable()
 export class UserService {
     private auth: IAuthUser = null;
+    private sn: string = null;
     private authListener = new Set<IAuthListener>();
 
     constructor() {
@@ -13,7 +14,7 @@ export class UserService {
 
     addAuthListener(call: IAuthListener): IAuthListener {
         this.authListener.add(call);
-        call(this.auth);
+        call(this.auth, this.sn);
         return call;
     }
 
@@ -21,12 +22,13 @@ export class UserService {
         this.authListener.delete(call);
     }
 
-    setAuth(auth: IAuthUser) {
+    setAuth(auth: IAuthUser, sn: string) {
         this.auth = auth;
-        this.authListener.forEach(f => f(auth));
+        this.sn = sn;
+        this.authListener.forEach(f => f(auth, sn));
     }
 }
 
 export interface IAuthListener {
-    (auth: IAuthUser): void
+    (auth: IAuthUser, sn: string): void
 }

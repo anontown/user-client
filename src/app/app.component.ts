@@ -26,8 +26,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private user: UserService) {
   }
 
-  login(auth: IAuthUser) {
-    this.user.setAuth(auth);
+  login(obj: { auth: IAuthUser, sn: string }) {
+    this.user.setAuth(obj.auth, obj.sn);
   }
 }
 

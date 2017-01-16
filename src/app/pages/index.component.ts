@@ -13,6 +13,7 @@ import { UserService, IAuthListener } from '../services/user.service';
 export class IndexComponent implements OnInit, OnDestroy {
     private auth: IAuthUser = null;
     pass: string = "";
+    sn: string = "";
     private errorMsg: string | null = null;
 
     constructor(private user: UserService, private api: AtApiService) {
@@ -20,10 +21,11 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     private authListener: IAuthListener;
     ngOnInit() {
-        this.authListener = this.user.addAuthListener(async auth => {
+        this.authListener = this.user.addAuthListener(async (auth, sn) => {
             this.auth = auth;
             if (auth !== null) {
                 this.pass = auth.pass;
+                this.sn = sn;
             }
         });
     }
@@ -33,8 +35,8 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     ok() {
         (async () => {
-            await this.api.updateUser(this.auth, { pass: this.pass });
-            await this.user.setAuth({ id: this.auth.id, pass: this.pass });
+            await this.api.updateUser(this.auth, { pass: this.pass, sn: this.sn });
+            await this.user.setAuth({ id: this.auth.id, pass: this.pass }, this.sn);
             this.errorMsg = null;
         })().catch(e => {
             if (e instanceof AtError) {
