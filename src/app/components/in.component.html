@@ -18,6 +18,7 @@
         登録
       </md-option>
     </md-select>
+     <re-captcha *ngIf="!isLogin" site_key="{{siteKey}}"></re-captcha>
 
     <button type="submit" md-button>OK</button>
   </form>

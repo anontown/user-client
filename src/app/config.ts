@@ -5,4 +5,5 @@ export class Config {
     static clientURL = environment.production ? "https://anontown.com" : "http://localhost:4100";
     static userURL = environment.production ? "https://user.anontown.com" : "http://localhost:4201";
     static serverURL = environment.production ? "https://api.anontown.com" : "http://localhost:8081";
+    static recaptcha = environment.production ? "6LdoFBQUAAAAACc3lhPhbkEANEAHsmNd6UDN2vKo" : "6LeoFBQUAAAAAB0fiXvXvaBO9VyFC7igegEOlD7a";
 }

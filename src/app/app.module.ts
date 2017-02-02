@@ -17,7 +17,7 @@ import { Config } from './config';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 import { ClientEditComponent } from './components/client-edit.component';
-
+import { ReCaptchaModule } from 'angular2-recaptcha';
 AtApiService.serverURL = Config.serverURL;
 
 @NgModule({
@@ -37,6 +37,7 @@ AtApiService.serverURL = Config.serverURL;
         BrowserModule,
         FormsModule,
         HttpModule,
+        ReCaptchaModule,
         RouterModule.forRoot([
             {
                 path: '',
