@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter,ViewChild } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AtApiService, AtError, IAuthUser } from 'anontown';
 import { Config } from '../config';
 import { ReCaptchaComponent } from 'angular2-recaptcha/lib/captcha.component';
@@ -13,9 +13,9 @@ export class InComponent {
     private pass = "";
     private isLogin = true;
     private errorMsg: string | null = null;
-    siteKey=Config.recaptcha;
+    siteKey = Config.recaptcha;
 
-    @ViewChild(ReCaptchaComponent) captcha:ReCaptchaComponent;
+    @ViewChild(ReCaptchaComponent) captcha: ReCaptchaComponent;
 
     @Output()
     login = new EventEmitter<{ auth: IAuthUser, sn: string }>();
@@ -23,14 +23,14 @@ export class InComponent {
     constructor(private api: AtApiService) { }
 
     async ok() {
-        try{
+        try {
             let id: string;
             if (!this.isLogin) {
-                let user = await this.api.createUser({
-                    sn: this.sn,
-                    pass: this.pass,
-                    recaptcha:this.captcha.getResponse() as string
-                });
+                let user = await this.api.createUser(this.captcha.getResponse() as string,
+                    {
+                        sn: this.sn,
+                        pass: this.pass
+                    });
                 id = user.id;
             } else {
                 id = await this.api.findUserID({ sn: this.sn });
@@ -38,8 +38,8 @@ export class InComponent {
             let auth = { id, pass: this.pass };
             await this.api.authUser(auth);
             this.login.emit({ auth, sn: this.sn })
-        }catch(e){
-            if(this.captcha){
+        } catch (e) {
+            if (this.captcha) {
                 this.captcha.reset();
             }
             if (e instanceof AtError) {
