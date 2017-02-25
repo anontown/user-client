@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { AtApiService, AtError, Client, IAuthUser } from 'anontown';
+import { AtApiService, AtError, Client, IAuthUser,IAtError } from 'anontown';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { AtApiService, AtError, Client, IAuthUser } from 'anontown';
 export class ClientAddComponent {
   private url = "";
   private name = "";
-  private errorMsg: string | null = null;
+  private errors: IAtError[] = [];
 
   @Input()
   auth: IAuthUser;
@@ -28,10 +28,10 @@ export class ClientAddComponent {
         url: this.url
       });
       this.add.emit(client);
-      this.errorMsg = null;
+      this.errors = [];
     })().catch(e => {
       if (e instanceof AtError) {
-        this.errorMsg = e.message;
+        this.errors = e.errors;
       } else {
         throw e;
       }

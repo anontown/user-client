@@ -3,7 +3,7 @@ import {
     OnInit,
     OnDestroy
 } from '@angular/core';
-import { AtApiService, AtError, IAuthUser } from 'anontown';
+import { AtApiService, AtError, IAuthUser,IAtError } from 'anontown';
 import { UserService, IAuthListener } from '../services/user.service';
 
 
@@ -14,7 +14,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     private auth: IAuthUser = null;
     pass: string = "";
     sn: string = "";
-    private errorMsg: string | null = null;
+    private errors: IAtError[] = [];
 
     constructor(private user: UserService, private api: AtApiService) {
     }
@@ -37,10 +37,10 @@ export class IndexComponent implements OnInit, OnDestroy {
         (async () => {
             await this.api.updateUser(this.auth, { pass: this.pass, sn: this.sn });
             await this.user.setAuth({ id: this.auth.id, pass: this.pass }, this.sn);
-            this.errorMsg = null;
+            this.errors = [];
         })().catch(e => {
             if (e instanceof AtError) {
-                this.errorMsg = e.message;
+                this.errors = e.errors;
             } else {
                 throw e;
             }

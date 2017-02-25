@@ -1,6 +1,6 @@
 <form (ngSubmit)="ok()">
-    <div *ngIf="errorMsg!==null">
-        <md-icon>error</md-icon> {{errorMsg}}
+    <div *ngFor="let e of errors">
+        <md-icon>error</md-icon> {{e.message}}
     </div>
 
     <md-input-container>

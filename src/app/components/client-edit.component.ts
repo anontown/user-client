@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { AtApiService, Client, AtError, IAuthUser } from 'anontown';
+import { AtApiService, Client, AtError, IAuthUser,IAtError } from 'anontown';
 
 @Component({
     selector: 'at-client-edit',
@@ -21,7 +21,7 @@ export class ClientEditComponent extends OnInit {
 
     name: string;
     url: string;
-    errorMsg: string | null = null;
+    errors: IAtError[] = [];
     ngOnInit() {
         this.name = this.client.name;
         this.url = this.client.url;
@@ -34,10 +34,10 @@ export class ClientEditComponent extends OnInit {
                 url: this.url
             });
             this.update.emit(client);
-            this.errorMsg = null;
+            this.errors = [];
         })().catch(e => {
             if (e instanceof AtError) {
-                this.errorMsg = e.message;
+                this.errors = e.errors;
             } else {
                 throw e;
             }

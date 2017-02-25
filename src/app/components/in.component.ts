@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
-import { AtApiService, AtError, IAuthUser } from 'anontown';
+import { AtApiService, AtError, IAuthUser,IAtError } from 'anontown';
 import { Config } from '../config';
 import { ReCaptchaComponent } from 'angular2-recaptcha/lib/captcha.component';
 
@@ -12,7 +12,7 @@ export class InComponent {
     private sn = "";
     private pass = "";
     private isLogin = true;
-    private errorMsg: string | null = null;
+    private errors: IAtError[] = [];
     siteKey = Config.recaptcha;
 
     @ViewChild(ReCaptchaComponent) captcha: ReCaptchaComponent;
@@ -43,7 +43,7 @@ export class InComponent {
                 this.captcha.reset();
             }
             if (e instanceof AtError) {
-                this.errorMsg = e.message;
+                this.errors = e.errors;
             } else {
                 throw e;
             }
